@@ -1,0 +1,39 @@
+{
+  "name": "delivery-service",
+  "version": "1.0.0",
+  "description": "FoodRush Delivery Service with WebSockets",
+  "scripts": {
+    "build": "nest build",
+    "start": "node dist/main",
+    "start:dev": "nest start --watch"
+  },
+  "dependencies": {
+    "@nestjs/common": "^10.3.0",
+    "@nestjs/core": "^10.3.0",
+    "@nestjs/platform-express": "^10.3.0",
+    "@nestjs/platform-socket.io": "^10.3.0",
+    "@nestjs/websockets": "^10.3.0",
+    "@nestjs/typeorm": "^10.0.1",
+    "@nestjs/passport": "^10.0.3",
+    "@nestjs/jwt": "^10.2.0",
+    "@nestjs/microservices": "^10.3.0",
+    "amqplib": "^0.10.3",
+    "amqp-connection-manager": "^4.1.14",
+    "socket.io": "^4.7.4",
+    "typeorm": "^0.3.19",
+    "pg": "^8.11.3",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "class-validator": "^0.14.1",
+    "class-transformer": "^0.5.1",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^10.3.0",
+    "@nestjs/schematics": "^10.1.0",
+    "@types/node": "^20.11.0",
+    "@types/passport-jwt": "^4.0.1",
+    "typescript": "^5.3.3"
+  }
+}
