@@ -1,0 +1,14 @@
+{
+  "name": "foodrush-seed",
+  "version": "1.0.0",
+  "description": "Seed data for FoodRush",
+  "main": "seed.js",
+  "scripts": {
+    "seed": "node seed.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "mongodb": "^6.0.0",
+    "pg": "^8.11.0"
+  }
+}

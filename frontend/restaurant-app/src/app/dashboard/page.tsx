@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuthStore } from '@/store/authStore';
@@ -109,7 +110,10 @@ export default function DashboardPage() {
             </button>
           ))}
         </nav>
-        <div className="p-4 border-t">
+        <div className="p-4 border-t space-y-2">
+          <Link href="/about" className="flex items-center gap-2 text-sm text-gray-500 hover:text-orange-600 w-full px-4 py-2">
+            <BookOpen className="w-4 h-4" /> About
+          </Link>
           <button
             onClick={() => { logout(); router.push('/login'); }}
             className="flex items-center gap-2 text-sm text-gray-500 hover:text-red-500 w-full px-4 py-2"

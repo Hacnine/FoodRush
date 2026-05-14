@@ -1,76 +1,68 @@
-'use client';
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Search } from 'lucide-react';
+import Link from 'next/link';
 import Navbar from '@/components/Navbar';
-import RestaurantCard from '@/components/RestaurantCard';
-import api from '@/lib/api';
+import { ArrowRight } from 'lucide-react';
 
 export default function HomePage() {
-  const [search, setSearch] = useState('');
-  const [city, setCity] = useState('');
-
-  const { data, isLoading } = useQuery({
-    queryKey: ['restaurants', search, city],
-    queryFn: () => api.get('/restaurants', { params: { search, city, limit: 24 } }).then((r) => r.data),
-  });
-
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gray-50">
       <Navbar />
 
-      {/* Hero */}
-      <div className="bg-gradient-to-br from-orange-500 to-orange-600 text-white py-20 px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-5xl font-bold mb-4">Order food you love</h1>
-          <p className="text-orange-100 text-xl mb-10">Fast delivery from the best restaurants near you</p>
-
-          <div className="flex gap-3 max-w-2xl mx-auto">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Search restaurants or cuisines..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-300"
-              />
+      <div className="relative overflow-hidden bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 py-28">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.6),transparent_40%)]" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] items-center">
+            <div className="text-white">
+              <p className="text-sm uppercase tracking-[0.3em] text-orange-100 mb-4">FoodRush</p>
+              <h1 className="text-5xl font-bold tracking-tight sm:text-6xl">Fast food delivery, right where you are.</h1>
+              <p className="mt-6 max-w-2xl text-lg text-orange-100">
+                Enjoy local restaurants, live menus, and seamless checkout with client-side interactivity.
+                The home page is served statically for instant load, while restaurant and order content use server rendering and ISR.
+              </p>
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+                <Link href="/restaurants" className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-base font-semibold text-orange-600 shadow-lg shadow-orange-200 transition hover:bg-orange-50">
+                  Browse Restaurants
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Link>
+                <Link href="/about" className="inline-flex items-center justify-center rounded-full border border-white/70 bg-white/10 px-7 py-3 text-base font-semibold text-white transition hover:bg-white/20">
+                  About rendering modes
+                </Link>
+              </div>
             </div>
-            <input
-              type="text"
-              placeholder="City"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              className="w-36 px-4 py-3 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-300"
-            />
+
+            <div className="rounded-[2rem] bg-white/10 p-10 ring-1 ring-white/20 backdrop-blur-xl">
+              <div className="space-y-6 text-white">
+                <div>
+                  <p className="text-sm uppercase tracking-[0.3em] text-orange-100">Static welcome</p>
+                  <h2 className="text-3xl font-bold">SSG / static</h2>
+                  <p className="mt-3 text-sm text-orange-100/90">
+                    This page is generated at build time and served as a fast, cached HTML entry point.
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm uppercase tracking-[0.3em] text-orange-100">Server-rendered details</p>
+                  <h2 className="text-3xl font-bold">SSR</h2>
+                  <p className="mt-3 text-sm text-orange-100/90">
+                    Restaurant detail pages always fetch fresh menu data on the server.
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm uppercase tracking-[0.3em] text-orange-100">Incremental updates</p>
+                  <h2 className="text-3xl font-bold">ISR</h2>
+                  <p className="mt-3 text-sm text-orange-100/90">
+                    The restaurants list is regenerated every hour for updated content without rebuilding the entire site.
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm uppercase tracking-[0.3em] text-orange-100">Client interactivity</p>
+                  <h2 className="text-3xl font-bold">CSR</h2>
+                  <p className="mt-3 text-sm text-orange-100/90">
+                    Cart, checkout, and login pages remain interactive in the browser using client-side state.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Restaurants Grid */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          {search || city ? 'Search Results' : 'Featured Restaurants'}
-        </h2>
-
-        {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="bg-white rounded-2xl h-72 animate-pulse" />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {data?.data?.map((r: any) => <RestaurantCard key={r._id} restaurant={r} />)}
-          </div>
-        )}
-
-        {data?.data?.length === 0 && (
-          <div className="text-center py-20 text-gray-500">
-            <p className="text-xl">No restaurants found</p>
-            <p className="text-sm mt-2">Try a different search or city</p>
-          </div>
-        )}
       </div>
     </div>
   );

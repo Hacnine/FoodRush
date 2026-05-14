@@ -21,6 +21,9 @@ export default function Navbar() {
             <Link href="/restaurants" className="text-gray-600 hover:text-orange-500 text-sm font-medium">
               Restaurants
             </Link>
+            <Link href="/about" className="text-gray-600 hover:text-orange-500 text-sm font-medium">
+              About
+            </Link>
 
             <Link href="/cart" className="relative p-2 text-gray-600 hover:text-orange-500">
               <ShoppingCart className="w-5 h-5" />
